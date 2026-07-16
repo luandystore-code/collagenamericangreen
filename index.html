@@ -557,7 +557,7 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
 </div>
 
 <script>
-  // ==== CONFIGURA AQUÍ TU URL DE GOOGLE APPS SCRIPT ====
+  // ==== PEGA AQUÍ TU URL GENERADA EN EL PASO 1 (ASEGÚRATE DE QUE SEA LA ÚLTIMA) ====
   const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycby2fdPW4jBddAy7MIbcayN-VZhU2UdPJORCeDDNhnderTQANrycNAFz0rXoEg35pJq_/exec";
 
   const plans = document.querySelectorAll('.plan');
@@ -594,10 +594,6 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
   });
 
   // ==== CAPTURA DE UTMs ====
-  // Lee los parámetros utm_* de la URL con la que llegó el visitante
-  // (ej: ?utm_source=facebook&utm_medium=cpc&utm_campaign=verano)
-  // y los guarda en el navegador para que no se pierdan aunque el
-  // visitante navegue varias páginas antes de comprar.
   function getUTMs(){
     const params = new URLSearchParams(window.location.search);
     const keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
@@ -617,7 +613,7 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
   const formStatus = document.getElementById('formStatus');
 
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Evita que la página se recargue
     submitBtn.disabled = true;
     submitBtn.textContent = 'Enviando...';
 
@@ -642,7 +638,6 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
     };
 
     try {
-      // 1. Condición corregida: se eliminó el "!" para que permita hacer la conexión
       if (ORDER_ENDPOINT) {
         await fetch(ORDER_ENDPOINT, {
           method: 'POST',
@@ -653,9 +648,9 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
       } 
       
       formStatus.className = 'form-status ok';
-      formStatus.textContent = '¡Pedido recibido! Te escribiremos por WhatsApp al ' + payload.telefono + ' para confirmar.';
+      formStatus.textContent = '¡Pedido recibido! Yenifer te escribirá por WhatsApp al ' + payload.telefono + ' para confirmar.';
 
-      // Evento de conversión para Meta Ads que alimenta a tu Píxel
+      // Evento de conversión Meta Ads
       if (typeof fbq === 'function') {
         fbq('track', 'Purchase', {
           value: payload.total,
@@ -672,13 +667,12 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
       updateTotal();
 
     } catch (err) {
-      // 2. Un único bloque Catch que maneja cualquier error real de conexión
-      console.error("Error en la conexión al enviar el pedido:", err);
+      console.error("Error en el envío:", err);
       formStatus.className = 'form-status err';
       formStatus.textContent = 'No pudimos enviar tu pedido. Escríbenos directo por WhatsApp para confirmarlo.';
     } finally {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Confirmar Pago Contraentrega'; 
+      submitBtn.textContent = 'Confirmar Pago Contraentrega';
     }
   });
 
