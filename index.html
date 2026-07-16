@@ -642,23 +642,20 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
     };
 
     try {
-  if (ORDER_ENDPOINT && !ORDER_ENDPOINT.includes('https://script.google.com/macros/s/AKfycby2fdPW4jBddAy7MIbcayN-VZhU2UdPJORCeDDNhnderTQANrycNAFz0rXoEg35pJq_/exec')) {
-  await fetch(ORDER_ENDPOINT, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(payload)
-  });
-}    
-} catch (error) {
-  // Es obligatorio capturar el error si el "try" falla
-  console.error("Error en la conexión al enviar el pedido:", error);
-}
+      // 1. Condición corregida: se eliminó el "!" para que permita hacer la conexión
+      if (ORDER_ENDPOINT) {
+        await fetch(ORDER_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(payload)
+        });
+      } 
+      
       formStatus.className = 'form-status ok';
       formStatus.textContent = '¡Pedido recibido! Te escribiremos por WhatsApp al ' + payload.telefono + ' para confirmar.';
 
-      // Evento de conversión para Meta Ads: se dispara cuando el formulario
-      // se envía correctamente. Tus campañas están optimizadas a este evento.
+      // Evento de conversión para Meta Ads que alimenta a tu Píxel
       if (typeof fbq === 'function') {
         fbq('track', 'Purchase', {
           value: payload.total,
@@ -673,12 +670,15 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
       document.querySelector('.plan[data-qty="2"]').classList.add('selected');
       bumpCheck.checked = false;
       updateTotal();
-    }catch(err){
+
+    } catch (err) {
+      // 2. Un único bloque Catch que maneja cualquier error real de conexión
+      console.error("Error en la conexión al enviar el pedido:", err);
       formStatus.className = 'form-status err';
       formStatus.textContent = 'No pudimos enviar tu pedido. Escríbenos directo por WhatsApp para confirmarlo.';
-    }finally{
+    } finally {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Confirmar pedido contra entrega';
+      submitBtn.textContent = 'Confirmar Pago Contraentrega'; 
     }
   });
 
