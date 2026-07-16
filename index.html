@@ -558,7 +558,7 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
 
 <script>
   // ==== CONFIGURA AQUÍ TU URL DE GOOGLE APPS SCRIPT ====
-  const ORDER_ENDPOINT = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT";
+  const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycby2fdPW4jBddAy7MIbcayN-VZhU2UdPJORCeDDNhnderTQANrycNAFz0rXoEg35pJq_/exec";
 
   const plans = document.querySelectorAll('.plan');
   const totalAmount = document.getElementById('totalAmount');
@@ -642,16 +642,14 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
     };
 
     try {
-  if (ORDER_ENDPOINT.startsWith('https://script.google.com/macros/s/AKfycby2fdPW4jBddAy7MIbcayN-VZhU2UdPJORCeDDNhnderTQANrycNAFz0rXoEg35pJq_/exec')) {
-    await fetch(ORDER_ENDPOINT, {
-      method: 'POST',
-      mode: 'no-cors', // Evita bloqueos de origen cruzado (CORS)
-      headers: {
-        'Content-Type': 'text/plain' // En Apps Script se recibe a través de e.postData.contents
-      },
-      body: JSON.stringify(payload)
-    });
-  }
+  if (ORDER_ENDPOINT && !ORDER_ENDPOINT.includes('https://script.google.com/macros/s/AKfycby2fdPW4jBddAy7MIbcayN-VZhU2UdPJORCeDDNhnderTQANrycNAFz0rXoEg35pJq_/exec')) {
+  await fetch(ORDER_ENDPOINT, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(payload)
+  });
+}    
 } catch (error) {
   // Es obligatorio capturar el error si el "try" falla
   console.error("Error en la conexión al enviar el pedido:", error);
