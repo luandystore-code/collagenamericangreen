@@ -587,24 +587,24 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
 </div>
 
 <script>
-  // ==== PEGA AQUÍ TU URL GENERADA EN EL PASO 1 (ASEGÚRATE DE QUE SEA LA ÚLTIMA) ====
+  // ==== PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT ====
   const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycby2fdPW4jBddAy7MIbcayN-VZhU2UdPJORCeDDNhnderTQANrycNAFz0rXoEg35pJq_/exec";
 
   const plans = document.querySelectorAll('.plan');
   const totalAmount = document.getElementById('totalAmount');
   const stickyPrice = document.getElementById('stickyPrice');
-  const bumpCheck = document.getElementById('bumpCheck');
-  const BUMP_PRICE = 69;
 
   function currentBase(){
     const selected = document.querySelector('.plan.selected');
     return selected ? parseInt(selected.dataset.price, 10) : 0;
   }
+  
   function updateTotal(){
-    const total = currentBase() + (bumpCheck.checked ? BUMP_PRICE : 0);
+    const total = currentBase();
     totalAmount.textContent = 'S/' + total;
     stickyPrice.textContent = 'S/' + total;
   }
+  
   plans.forEach(p => {
     p.addEventListener('click', () => {
       plans.forEach(x => x.classList.remove('selected'));
@@ -613,7 +613,6 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
       updateTotal();
     });
   });
-  bumpCheck.addEventListener('change', updateTotal);
 
   document.querySelectorAll('.faq-item').forEach(item => {
     item.querySelector('.faq-q').addEventListener('click', () => {
@@ -643,11 +642,12 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
   const formStatus = document.getElementById('formStatus');
 
   form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Evita que la página se recargue
+    e.preventDefault(); 
     submitBtn.disabled = true;
     submitBtn.textContent = 'Enviando...';
 
     const selectedPlan = document.querySelector('.plan.selected');
+    
     const payload = {
       producto: 'American Green Collagen Bio-Peptides',
       nombre: document.getElementById('nombre').value.trim(),
@@ -657,8 +657,8 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
       direccion: document.getElementById('direccion').value.trim(),
       referencia: document.getElementById('referencia').value.trim(),
       unidades: selectedPlan.dataset.qty,
-      probiotico: bumpCheck.checked ? 'Sí' : 'No',
-      total: currentBase() + (bumpCheck.checked ? BUMP_PRICE : 0),
+      probiotico: 'No', // Se mantiene en 'No' para no alterar las columnas de Google Sheets
+      total: currentBase(),
       utm_source: utms.utm_source,
       utm_medium: utms.utm_medium,
       utm_campaign: utms.utm_campaign,
@@ -693,15 +693,13 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
       form.reset();
       plans.forEach(x => x.classList.remove('selected'));
       document.querySelector('.plan[data-qty="2"]').classList.add('selected');
-      bumpCheck.checked = false;
       updateTotal();
 
     } catch (err) {
       console.error("Error en el envío:", err);
       formStatus.className = 'form-status err';
       
-      // Usamos innerHTML en lugar de textContent para que el enlace sea clickable
-      formStatus.innerHTML = 'No pudimos enviar tu pedido automáticamente. <br><br>👉 <a href="https://wa.me/51949222654?text=Hola%20,%20tuve%20un%20problema%20en%20la%20web%20y%20quiero%20confirmar%20mi%20pedido%20con%20Pago%20Contraentrega" target="_blank" style="color: #128C7E; font-weight: bold; text-decoration: underline;">Haz clic aquí para escribirle directo a Yenifer por WhatsApp</a> y coordinar el envío de tus frascos.';
+      formStatus.innerHTML = 'No pudimos enviar tu pedido automáticamente. <br><br>👉 <a href="https://wa.me/51949222654?text=Hola%20Yenifer,%20tuve%20un%20problema%20en%20la%20web%20y%20quiero%20confirmar%20mi%20pedido%20con%20Pago%20Contraentrega" target="_blank" style="color: #128C7E; font-weight: bold; text-decoration: underline;">Haz clic aquí para escribirle directo a Yenifer por WhatsApp</a> y coordinar el envío de tus frascos.';
       
     } finally {
       submitBtn.disabled = false;
