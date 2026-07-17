@@ -117,6 +117,16 @@
   .section-head h2{font-size:34px;margin-bottom:14px;}
   .section-head p{color:var(--ink-soft);font-size:16px;}
 
+  /* problem agitation */
+  .problem{padding:64px 0 8px;}
+  .problem .inner{max-width:700px;margin:0 auto;text-align:center;}
+  .problem h2{font-size:28px;margin-bottom:16px;}
+  .problem p{font-size:16px;color:var(--ink-soft);line-height:1.65;}
+
+  /* mid-page CTA */
+  .mid-cta{text-align:center;margin-top:40px;}
+  .mid-cta .hint{display:block;margin-top:10px;font-size:13px;color:var(--ink-soft);}
+
   /* benefits */
   .benefits-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
   .benefit-card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:28px 22px;}
@@ -292,8 +302,8 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
       <h1>El complemento diario para una piel con <em>apariencia más firme</em> y saludable</h1>
       <p class="hero-sub">20 g de péptidos de colágeno hidrolizado por porción, sin sabor, pensado para disolverse fácilmente en tu café, agua o batido de todos los días.</p>
       <ul class="hero-bullets">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>20 g de colágeno hidrolizado por porción</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Ingrediente grass-fed, sin sabor añadido</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>28 porciones por pote — 1 mes de uso diario</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>100% Grassfed, sin aditivos ni rellenos</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Pago contra entrega, sin tarjeta</li>
       </ul>
       <div class="hero-actions">
@@ -319,6 +329,13 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
     <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>28 porciones por pote</span>
   </div>
 </div>
+
+<section class="problem">
+  <div class="wrap inner">
+    <h2>¿Notas que tu piel ya no luce tan firme como antes?</h2>
+    <p>A partir de los 25-30 años, tu cuerpo produce cada vez menos colágeno de forma natural. El resultado: piel menos firme, líneas de expresión más visibles, uñas quebradizas y cabello débil — aunque cuides tu alimentación y tu piel por fuera.</p>
+  </div>
+</section>
 
 <section class="benefits">
   <div class="wrap">
@@ -348,6 +365,10 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
         <h3>Superior Absorption®</h3>
         <p>Péptidos hidrolizados de bajo peso molecular, formulados para una mejor disolución y absorción.</p>
       </div>
+    </div>
+    <div class="mid-cta">
+      <button class="btn-primary" onclick="trackCTA()">Quiero mi colágeno →</button>
+      <span class="hint">Envío a todo el Perú · Pagas cuando lo recibes</span>
     </div>
   </div>
 </section>
@@ -388,7 +409,7 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
       <h2 style="font-size:30px;">Colágeno Bio-Peptides Protein</h2>
       <ul class="spec-list">
         <li><span>Porción</span><span>1 scoop (20 g)</span></li>
-        <li><span>Porciones por pote</span><span>Aprox. 28</span></li>
+        <li><span>Porciones por pote</span><span>28</span></li>
         <li><span>Colágeno bovino grass-fed</span><span>20 g por porción</span></li>
         <li><span>Sabor</span><span>Sin sabor (unflavored)</span></li>
         <li><span>Contenido neto</span><span>20 oz (567 g)</span></li>
