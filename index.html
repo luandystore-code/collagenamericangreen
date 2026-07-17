@@ -17,6 +17,8 @@
     --aqua-100:#E4F8FA;
     --coral-500:#E8785A;
     --coral-600:#D2603F;
+    --coral-btn:#B84E2A;
+    --coral-btn-hover:#A6472A;
     --cream:#F6F9F8;
     --paper:#FFFFFF;
     --ink:#122127;
@@ -83,11 +85,11 @@
   .hero-bullets svg{flex:none;width:20px;height:20px;color:var(--aqua-500);margin-top:1px;}
   .hero-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
   .btn-primary{
-    background:var(--coral-500);color:#fff;border:none;padding:16px 30px;border-radius:100px;
-    font-weight:700;font-size:15.5px;cursor:pointer;font-family:'Manrope',sans-serif;
+    background:var(--coral-btn);color:#fff;border:none;padding:16px 30px;border-radius:100px;
+    font-weight:700;font-size:17.5px;cursor:pointer;font-family:'Manrope',sans-serif;
     box-shadow:0 10px 24px -8px rgba(232,120,90,0.55);
   }
-  .btn-primary:hover{background:var(--coral-600);}
+  .btn-primary:hover{background:var(--coral-btn-hover);}
   .hero-price-note{font-size:13.5px;color:var(--ink-soft);}
   .hero-price-note strong{color:var(--teal-900);}
   .hero-visual{position:relative;display:flex;justify-content:center;align-items:center;}
@@ -216,10 +218,10 @@
   .total-row .label{font-size:14px;color:var(--ink-soft);}
   .total-row .amount{font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:var(--teal-900);}
   .submit-btn{
-    width:100%;background:var(--coral-500);color:#fff;border:none;padding:16px;border-radius:12px;
-    font-weight:800;font-size:15.5px;cursor:pointer;font-family:'Manrope',sans-serif;
+    width:100%;background:var(--coral-btn);color:#fff;border:none;padding:16px;border-radius:12px;
+    font-weight:800;font-size:17px;cursor:pointer;font-family:'Manrope',sans-serif;
   }
-  .submit-btn:hover{background:var(--coral-600);}
+  .submit-btn:hover{background:var(--coral-btn-hover);}
   .submit-btn:disabled{opacity:.65;cursor:default;}
   .form-note{font-size:12px;color:var(--ink-soft);text-align:center;margin-top:12px;}
   .form-status{margin-top:14px;font-size:13.5px;text-align:center;padding:10px;border-radius:10px;display:none;}
@@ -248,7 +250,7 @@
     transition:opacity .3s ease, transform .3s ease;
   }
   .sticky-cta.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
-  .sticky-cta button{background:var(--coral-500);color:#fff;border:none;padding:13px 32px;border-radius:100px;font-weight:700;font-size:14.5px;}
+  .sticky-cta button{background:var(--coral-btn);color:#fff;border:none;padding:13px 32px;border-radius:100px;font-weight:700;font-size:16px;}
 
   @media(max-width:920px){
     .hero-grid{grid-template-columns:1fr;}
@@ -334,13 +336,7 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
 <section class="problem">
   <div class="wrap inner">
     <h2>¿Notas que tu piel ya no luce tan firme como antes?</h2>
-<p>
-A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares:<br><br>
-<strong>En tu piel:</strong> más suelta, menos firme, aunque uses buena crema.<br>
-<strong>En tus articulaciones:</strong> rodillas que truenan al subir escaleras y rigidez al levantarte.<br><br>
-<strong>American Green: 567g = 28 porciones = 1 MES COMPLETO.</strong><br>
-20G por toma, GrassFed, sin azúcar. Lo que otras marcas de 300g te dan para 15 días, aquí te rinde el mes completo.
-</p>
+    <p>A partir de los 25-30 años, tu cuerpo produce cada vez menos colágeno de forma natural. El resultado: piel menos firme, líneas de expresión más visibles, uñas quebradizas y cabello débil — aunque cuides tu alimentación y tu piel por fuera.</p>
   </div>
 </section>
 
@@ -435,19 +431,19 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
     <div class="testimonials-grid">
       <div class="t-card">
         <div class="t-stars">★★★★★</div>
-        <p>"Tengo 41 y sentía la piel más suelta aunque uso buena crema. A las 3 semanas con American Green la noto más firme y ya no me truena la rodilla al subir al 2do piso. Un solo scoop en mi café."</p>
+        <p>"Me gusta que no tiene sabor, lo mezclo en mi café de las mañanas y ya es parte de mi rutina."</p>
         <div class="t-name">Rocío M.</div>
         <div class="t-city">Lima</div>
       </div>
       <div class="t-card">
         <div class="t-stars">★★★★★</div>
-        <p>"Probé 2 colágenos que sabían feo y los dejé. Este no tiene sabor, se disuelve al toque. Lo tomo sin falta porque 1 pote sí me dura 28 días."</p>
+        <p>"El pedido llegó rápido y pagué contra entrega tal cual me dijeron, sin sorpresas."</p>
         <div class="t-name">Elena V.</div>
         <div class="t-city">Trujillo</div>
       </div>
       <div class="t-card">
         <div class="t-stars">★★★★★</div>
-        <p>"Lo compré por mis rodillas porque subo escaleras en el trabajo. Me sorprendió que también mi piel se ve menos apagada. Y rinde el mes completo, no como el de 300g que compré antes."</p>
+        <p>"Se disuelve fácil, no deja grumos y lo tomo todos los días sin problema."</p>
         <div class="t-name">Carmen S.</div>
         <div class="t-city">Arequipa</div>
       </div>
@@ -460,7 +456,7 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
     <div class="section-head">
       <span class="eyebrow" style="background:rgba(255,255,255,0.12);color:#fff;">Haz tu pedido</span>
       <h2>Elige tu paquete y paga contra entrega</h2>
-      <p>Completa tus datos y te confirmamos vía llamada o WhatsApp. Envío gratis · Entrega en 24-48 horas.</p>
+      <p>Completa tus datos y te confirmamos por WhatsApp. Envío gratis · Entrega en 24-48 horas.</p>
     </div>
     <div class="order-grid">
       <div>
@@ -493,9 +489,18 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
           </label>
         </div>
 
+        <label class="bump" id="bumpBox">
+          <input type="checkbox" id="bumpCheck">
+          <div>
+            <div class="bump-title">Agregar WOMEN'S PROBIOTIC (120 Capsules) American Green por S/69</div>
+            <div class="bump-sub">Complemento probiótico formulado para la salud femenina. Se agrega a tu mismo pedido.</div>
+          </div>
+        </label>
+      </div>
+
       <div class="order-form">
         <h3>Datos de entrega</h3>
-        <p class="sub">Solo pide si estarás en casa en las próximas 24-48h. Cada retorno nos cuesta S/25 en courier.</p>
+        <p class="sub">Nos contactaremos contigo vía WhatsApp o vía llamada para confirmar antes de despachar.</p>
         <form id="orderForm">
           <div class="field">
             <label for="nombre">Nombre completo</label>
@@ -546,7 +551,7 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
     </div>
     <div class="faq-item open">
       <div class="faq-q">¿Cómo funciona el pago contra entrega?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div>
-      <div class="faq-a"><p>Completas el formulario, te confirmamos por llamada o WhatsApp y pagas en efectivo directamente al repartidor cuando recibes tu pedido en la puerta de tu casa.</p></div>
+      <div class="faq-a"><p>Completas el formulario, te confirmamos por WhatsApp y pagas en efectivo directamente al repartidor cuando recibes tu pedido en la puerta de tu casa.</p></div>
     </div>
     <div class="faq-item">
       <div class="faq-q">¿Cuánto demora el envío?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div>
