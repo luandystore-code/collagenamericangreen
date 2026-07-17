@@ -19,6 +19,8 @@
     --coral-600:#D2603F;
     --coral-btn:#B84E2A;
     --coral-btn-hover:#A6472A;
+    --wa-green:#075E54;
+    --wa-green-hover:#053F38;
     --cream:#F6F9F8;
     --paper:#FFFFFF;
     --ink:#122127;
@@ -85,11 +87,13 @@
   .hero-bullets svg{flex:none;width:20px;height:20px;color:var(--aqua-500);margin-top:1px;}
   .hero-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
   .btn-primary{
-    background:var(--coral-btn);color:#fff;border:none;padding:16px 30px;border-radius:100px;
+    background:var(--wa-green);color:#fff;border:none;padding:16px 30px;border-radius:100px;
     font-weight:700;font-size:17.5px;cursor:pointer;font-family:'Manrope',sans-serif;
-    box-shadow:0 10px 24px -8px rgba(232,120,90,0.55);
+    box-shadow:0 10px 24px -8px rgba(7,94,84,0.45);
+    display:inline-flex;align-items:center;gap:10px;
   }
-  .btn-primary:hover{background:var(--coral-btn-hover);}
+  .btn-primary svg{width:19px;height:19px;flex:none;}
+  .btn-primary:hover{background:var(--wa-green-hover);}
   .hero-price-note{font-size:13.5px;color:var(--ink-soft);}
   .hero-price-note strong{color:var(--teal-900);}
   .hero-visual{position:relative;display:flex;justify-content:center;align-items:center;}
@@ -218,10 +222,12 @@
   .total-row .label{font-size:14px;color:var(--ink-soft);}
   .total-row .amount{font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:var(--teal-900);}
   .submit-btn{
-    width:100%;background:var(--coral-btn);color:#fff;border:none;padding:16px;border-radius:12px;
+    width:100%;background:var(--wa-green);color:#fff;border:none;padding:16px;border-radius:12px;
     font-weight:800;font-size:17px;cursor:pointer;font-family:'Manrope',sans-serif;
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
   }
-  .submit-btn:hover{background:var(--coral-btn-hover);}
+  .submit-btn svg{width:19px;height:19px;flex:none;}
+  .submit-btn:hover{background:var(--wa-green-hover);}
   .submit-btn:disabled{opacity:.65;cursor:default;}
   .form-note{font-size:12px;color:var(--ink-soft);text-align:center;margin-top:12px;}
   .form-status{margin-top:14px;font-size:13.5px;text-align:center;padding:10px;border-radius:10px;display:none;}
@@ -250,7 +256,9 @@
     transition:opacity .3s ease, transform .3s ease;
   }
   .sticky-cta.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
-  .sticky-cta button{background:var(--coral-btn);color:#fff;border:none;padding:13px 32px;border-radius:100px;font-weight:700;font-size:16px;}
+  .sticky-cta button{background:var(--wa-green);color:#fff;border:none;padding:13px 32px;border-radius:100px;font-weight:700;font-size:16px;display:inline-flex;align-items:center;gap:9px;}
+  .sticky-cta button:hover{background:var(--wa-green-hover);}
+  .sticky-cta button svg{width:17px;height:17px;flex:none;}
 
   @media(max-width:920px){
     .hero-grid{grid-template-columns:1fr;}
@@ -309,7 +317,7 @@ src="https://www.facebook.com/tr?id=818885113071784&ev=PageView&noscript=1"
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Pago contra entrega, sin tarjeta</li>
       </ul>
       <div class="hero-actions">
-        <button class="btn-primary" id="heroCtaBtn" onclick="trackCTA()">Quiero mi colágeno</button>
+        <button class="btn-primary" id="heroCtaBtn" onclick="trackCTA()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.02 2 11c0 2.25.93 4.29 2.45 5.88L3 22l5.35-1.4C9.74 21.16 10.85 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2Z"/></svg>Quiero mi colágeno</button>
         <span class="hero-price-note">Desde <strong>S/129</strong> · Envío gratis · Entrega en 24-48h</span>
       </div>
     </div>
@@ -376,7 +384,7 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
       </div>
     </div>
     <div class="mid-cta">
-      <button class="btn-primary" onclick="trackCTA()">Quiero mi colágeno →</button>
+      <button class="btn-primary" onclick="trackCTA()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.02 2 11c0 2.25.93 4.29 2.45 5.88L3 22l5.35-1.4C9.74 21.16 10.85 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2Z"/></svg>Quiero mi colágeno →</button>
       <span class="hint">Envío gratis a todo el Perú · Entrega en 24-48h</span>
     </div>
   </div>
@@ -531,7 +539,7 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
             <span class="amount" id="totalAmount">S/199</span>
           </div>
 
-          <button type="submit" class="submit-btn" id="submitBtn">Confirmar pedido contra entrega</button>
+          <button type="submit" class="submit-btn" id="submitBtn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.02 2 11c0 2.25.93 4.29 2.45 5.88L3 22l5.35-1.4C9.74 21.16 10.85 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2Z"/></svg>Confirmar pedido contra entrega</button>
           <p class="form-note">No se realiza ningún cobro en línea. Pagas en efectivo al recibir tu pedido.</p>
           <div class="form-status" id="formStatus"></div>
         </form>
@@ -575,7 +583,7 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
 </footer>
 
 <div class="sticky-cta" id="stickyCta">
-  <button onclick="trackCTA()">Pedir ahora</button>
+  <button onclick="trackCTA()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.02 2 11c0 2.25.93 4.29 2.45 5.88L3 22l5.35-1.4C9.74 21.16 10.85 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2Z"/></svg>Pedir ahora</button>
 </div>
 
 <script>
