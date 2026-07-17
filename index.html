@@ -503,16 +503,6 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
           </label>
         </div>
 
-        <label class="bump" id="bumpBox">
-          <input type="checkbox" id="bumpCheck">
-          <div>
-            <div class="bump-title">Agregar WOMEN'S PROBIOTIC (120 Capsules) American Green por S/69</div>
-            <div class="bump-sub">Complemento probiótico formulado para la salud femenina. Se agrega a tu mismo pedido.</div>
-          </div>
-        </label>
-      </div>
-
-
       <div class="order-form">
         <h3>Datos de entrega</h3>
         <p class="sub">Solo pide si estarás en casa en las próximas 24-48h. Cada retorno nos cuesta S/25 en courier.</p>
@@ -597,24 +587,70 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
 </div>
 
 <script>
-  // ==== PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT ====
+  // ==== PEGA AQUÍ TU URL GENERADA EN EL PASO 1 (ASEGÚRATE DE QUE SEA LA ÚLTIMA) ====
   const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycby2fdPW4jBddAy7MIbcayN-VZhU2UdPJORCeDDNhnderTQANrycNAFz0rXoEg35pJq_/exec";
 
   const plans = document.querySelectorAll('.plan');
   const totalAmount = document.getElementById('totalAmount');
-  const stickyPrice = document.getElementById('stickyPrice');
+  const bumpCheck = document.getElementById('bumpCheck');
+  const BUMP_PRICE = 69;
+
+  // Se ejecuta al hacer clic en "Quiero mi colágeno" (hero) o "Pedir ahora" (barra inferior).
+  // Dispara InitiateCheckout en el Meta Pixel para que la campaña detecte el clic como
+  // un pago iniciado, y luego lleva al visitante al formulario de pedido.
+  function trackCTA(){
+    if (typeof fbq === 'function') {
+      const raw = totalAmount ? totalAmount.textContent.replace(/[^0-9]/g, '') : '199';
+      fbq('track', 'InitiateCheckout', {
+        content_name: 'American Green Collagen Bio-Peptides',
+        content_category: 'Suplementos',
+        value: parseInt(raw, 10) || 199,
+        currency: 'PEN'
+      });
+    }
+    document.getElementById('pedido').scrollIntoView();
+  }
 
   function currentBase(){
     const selected = document.querySelector('.plan.selected');
     return selected ? parseInt(selected.dataset.price, 10) : 0;
   }
-  
   function updateTotal(){
-    const total = currentBase();
+    const total = currentBase() + (bumpCheck.checked ? BUMP_PRICE : 0);
     totalAmount.textContent = 'S/' + total;
-    stickyPrice.textContent = 'S/' + total;
   }
-  
+
+  // La barra inferior aparece recién cuando el botón del hero deja de estar visible
+  // (después de que el visitante ya lo vio y pasó al hacer scroll), y se oculta de nuevo
+  // cuando llega a la sección de ofertas/formulario (#pedido), donde ya tiene el CTA principal a la vista.
+  const stickyCta = document.getElementById('stickyCta');
+  const heroCtaBtn = document.getElementById('heroCtaBtn');
+  const pedidoSection = document.getElementById('pedido');
+  let pastHero = false;
+  let inPedido = false;
+  function refreshStickyVisibility(){
+    if (!stickyCta) return;
+    stickyCta.classList.toggle('visible', pastHero && !inPedido);
+  }
+  if (stickyCta && heroCtaBtn && 'IntersectionObserver' in window) {
+    const heroObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        pastHero = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        refreshStickyVisibility();
+      });
+    }, { threshold: 0 });
+    heroObserver.observe(heroCtaBtn);
+
+    if (pedidoSection) {
+      const pedidoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          inPedido = entry.isIntersecting;
+          refreshStickyVisibility();
+        });
+      }, { threshold: 0.15 });
+      pedidoObserver.observe(pedidoSection);
+    }
+  }
   plans.forEach(p => {
     p.addEventListener('click', () => {
       plans.forEach(x => x.classList.remove('selected'));
@@ -623,6 +659,7 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
       updateTotal();
     });
   });
+  bumpCheck.addEventListener('change', updateTotal);
 
   document.querySelectorAll('.faq-item').forEach(item => {
     item.querySelector('.faq-q').addEventListener('click', () => {
@@ -652,12 +689,11 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
   const formStatus = document.getElementById('formStatus');
 
   form.addEventListener('submit', async (e) => {
-    e.preventDefault(); 
+    e.preventDefault(); // Evita que la página se recargue
     submitBtn.disabled = true;
     submitBtn.textContent = 'Enviando...';
 
     const selectedPlan = document.querySelector('.plan.selected');
-    
     const payload = {
       producto: 'American Green Collagen Bio-Peptides',
       nombre: document.getElementById('nombre').value.trim(),
@@ -667,8 +703,8 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
       direccion: document.getElementById('direccion').value.trim(),
       referencia: document.getElementById('referencia').value.trim(),
       unidades: selectedPlan.dataset.qty,
-      probiotico: 'No', // Se mantiene en 'No' para no alterar las columnas de Google Sheets
-      total: currentBase(),
+      probiotico: bumpCheck.checked ? 'Sí' : 'No',
+      total: currentBase() + (bumpCheck.checked ? BUMP_PRICE : 0),
       utm_source: utms.utm_source,
       utm_medium: utms.utm_medium,
       utm_campaign: utms.utm_campaign,
@@ -688,7 +724,7 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
       } 
       
       formStatus.className = 'form-status ok';
-      formStatus.textContent = '¡Pedido recibido! Yenifer te escribirá por WhatsApp al ' + payload.telefono + ' para confirmar.';
+      formStatus.textContent = '¡Pedido recibido! Uno de nuestros acesores te contactará al ' + payload.telefono + ' para confirmar.';
 
       // Evento de conversión Meta Ads
       if (typeof fbq === 'function') {
@@ -703,13 +739,15 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
       form.reset();
       plans.forEach(x => x.classList.remove('selected'));
       document.querySelector('.plan[data-qty="2"]').classList.add('selected');
+      bumpCheck.checked = false;
       updateTotal();
 
     } catch (err) {
       console.error("Error en el envío:", err);
       formStatus.className = 'form-status err';
       
-      formStatus.innerHTML = 'No pudimos enviar tu pedido automáticamente. <br><br>👉 <a href="https://wa.me/51949222654?text=Hola%20Yenifer,%20tuve%20un%20problema%20en%20la%20web%20y%20quiero%20confirmar%20mi%20pedido%20con%20Pago%20Contraentrega" target="_blank" style="color: #128C7E; font-weight: bold; text-decoration: underline;">Haz clic aquí para escribirle directo a Yenifer por WhatsApp</a> y coordinar el envío de tus frascos.';
+      // Usamos innerHTML en lugar de textContent para que el enlace sea clickable
+      formStatus.innerHTML = 'No pudimos enviar tu pedido automáticamente. <br><br>👉 <a href="https://wa.me/51949222654?text=Hola%20Yenifer,%20tuve%20un%20problema%20en%20la%20web%20y%20quiero%20confirmar%20mi%20pedido%20con%20Pago%20Contraentrega" target="_blank" style="color: #128C7E; font-weight: bold; text-decoration: underline;">Haz clic aquí para escribir por WhatsApp</a> y coordinar el envío de tu pedido.';
       
     } finally {
       submitBtn.disabled = false;
