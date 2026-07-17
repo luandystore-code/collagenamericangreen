@@ -748,7 +748,7 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
       waTexto += `📍 Dirección: ${payload.direccion}, ${payload.ciudad}, ${payload.provincia}\n`;
       if (payload.referencia) waTexto += `🧭 Referencia: ${payload.referencia}\n`;
       const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waTexto)}`;
-      window.open(waUrl, '_blank');
+      window.location.href = waUrl;
 
       form.reset();
       plans.forEach(x => x.classList.remove('selected'));
