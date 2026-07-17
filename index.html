@@ -592,24 +592,9 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
 
   const plans = document.querySelectorAll('.plan');
   const totalAmount = document.getElementById('totalAmount');
+  const stickyPrice = document.getElementById('stickyPrice');
   const bumpCheck = document.getElementById('bumpCheck');
   const BUMP_PRICE = 69;
-
-  // Se ejecuta al hacer clic en "Quiero mi colágeno" (hero) o "Pedir ahora" (barra inferior).
-  // Dispara InitiateCheckout en el Meta Pixel para que la campaña detecte el clic como
-  // un pago iniciado, y luego lleva al visitante al formulario de pedido.
-  function trackCTA(){
-    if (typeof fbq === 'function') {
-      const raw = totalAmount ? totalAmount.textContent.replace(/[^0-9]/g, '') : '199';
-      fbq('track', 'InitiateCheckout', {
-        content_name: 'American Green Collagen Bio-Peptides',
-        content_category: 'Suplementos',
-        value: parseInt(raw, 10) || 199,
-        currency: 'PEN'
-      });
-    }
-    document.getElementById('pedido').scrollIntoView();
-  }
 
   function currentBase(){
     const selected = document.querySelector('.plan.selected');
@@ -618,38 +603,7 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
   function updateTotal(){
     const total = currentBase() + (bumpCheck.checked ? BUMP_PRICE : 0);
     totalAmount.textContent = 'S/' + total;
-  }
-
-  // La barra inferior aparece recién cuando el botón del hero deja de estar visible
-  // (después de que el visitante ya lo vio y pasó al hacer scroll), y se oculta de nuevo
-  // cuando llega a la sección de ofertas/formulario (#pedido), donde ya tiene el CTA principal a la vista.
-  const stickyCta = document.getElementById('stickyCta');
-  const heroCtaBtn = document.getElementById('heroCtaBtn');
-  const pedidoSection = document.getElementById('pedido');
-  let pastHero = false;
-  let inPedido = false;
-  function refreshStickyVisibility(){
-    if (!stickyCta) return;
-    stickyCta.classList.toggle('visible', pastHero && !inPedido);
-  }
-  if (stickyCta && heroCtaBtn && 'IntersectionObserver' in window) {
-    const heroObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        pastHero = !entry.isIntersecting && entry.boundingClientRect.top < 0;
-        refreshStickyVisibility();
-      });
-    }, { threshold: 0 });
-    heroObserver.observe(heroCtaBtn);
-
-    if (pedidoSection) {
-      const pedidoObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          inPedido = entry.isIntersecting;
-          refreshStickyVisibility();
-        });
-      }, { threshold: 0.15 });
-      pedidoObserver.observe(pedidoSection);
-    }
+    stickyPrice.textContent = 'S/' + total;
   }
   plans.forEach(p => {
     p.addEventListener('click', () => {
@@ -724,7 +678,7 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
       } 
       
       formStatus.className = 'form-status ok';
-      formStatus.textContent = '¡Pedido recibido! Uno de nuestros acesores te contactará al ' + payload.telefono + ' para confirmar.';
+      formStatus.textContent = '¡Pedido recibido! Yenifer te escribirá por WhatsApp al ' + payload.telefono + ' para confirmar.';
 
       // Evento de conversión Meta Ads
       if (typeof fbq === 'function') {
@@ -745,10 +699,7 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
     } catch (err) {
       console.error("Error en el envío:", err);
       formStatus.className = 'form-status err';
-      
-      // Usamos innerHTML en lugar de textContent para que el enlace sea clickable
-      formStatus.innerHTML = 'No pudimos enviar tu pedido automáticamente. <br><br>👉 <a href="https://wa.me/51949222654?text=Hola%20Yenifer,%20tuve%20un%20problema%20en%20la%20web%20y%20quiero%20confirmar%20mi%20pedido%20con%20Pago%20Contraentrega" target="_blank" style="color: #128C7E; font-weight: bold; text-decoration: underline;">Haz clic aquí para escribir por WhatsApp</a> y coordinar el envío de tu pedido.';
-      
+      formStatus.textContent = 'No pudimos enviar tu pedido. Escríbenos directo por WhatsApp para confirmarlo.';
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Confirmar Pago Contraentrega';
