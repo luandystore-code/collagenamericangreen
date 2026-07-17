@@ -589,7 +589,6 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
 <script>
   // ==== PEGA AQUÍ TU URL GENERADA EN EL PASO 1 (ASEGÚRATE DE QUE SEA LA ÚLTIMA) ====
   const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycby2fdPW4jBddAy7MIbcayN-VZhU2UdPJORCeDDNhnderTQANrycNAFz0rXoEg35pJq_/exec";
-  const WHATSAPP_NUMBER = "51949222654";
 
   const plans = document.querySelectorAll('.plan');
   const totalAmount = document.getElementById('totalAmount');
@@ -694,11 +693,6 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
     submitBtn.disabled = true;
     submitBtn.textContent = 'Enviando...';
 
-    // Abrimos la pestaña de WhatsApp en blanco AHORA MISMO, en el mismo instante del clic.
-    // Así el navegador no la bloquea como pop-up (solo bloquea las que se abren después de un "await").
-    // Más abajo, cuando ya tengamos los datos armados, la redirigimos al link real de WhatsApp.
-    const waWindow = window.open('', '_blank');
-
     const selectedPlan = document.querySelector('.plan.selected');
     const payload = {
       producto: 'American Green Collagen Bio-Peptides',
@@ -730,7 +724,7 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
       } 
       
       formStatus.className = 'form-status ok';
-      formStatus.textContent = '¡Pedido recibido! Te llevamos a WhatsApp para confirmar tu pedido...';
+      formStatus.textContent = '¡Pedido recibido! Uno de nuestros acesores te contactará al ' + payload.telefono + ' para confirmar.';
 
       // Evento de conversión Meta Ads
       if (typeof fbq === 'function') {
@@ -742,24 +736,6 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
         });
       }
 
-      // Abre WhatsApp con los datos del pedido ya redactados, listos para enviar al número de la tienda.
-      let waTexto = `Hola! Quiero confirmar mi pedido:\n\n`;
-      waTexto += `🛍️ Producto: ${payload.producto}\n`;
-      waTexto += `📦 Cantidad: ${payload.unidades} unidad(es)\n`;
-      if (payload.probiotico === 'Sí') waTexto += `➕ Agregado: Women's Probiotic (120 Capsules)\n`;
-      waTexto += `💰 Total: S/${payload.total} (pago contra entrega)\n\n`;
-      waTexto += `👤 Nombre: ${payload.nombre}\n`;
-      waTexto += `📱 Teléfono: ${payload.telefono}\n`;
-      waTexto += `📍 Dirección: ${payload.direccion}, ${payload.ciudad}, ${payload.provincia}\n`;
-      if (payload.referencia) waTexto += `🧭 Referencia: ${payload.referencia}\n`;
-      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waTexto)}`;
-      if (waWindow) {
-        waWindow.location.href = waUrl;
-      } else {
-        // Si el navegador bloqueó igual la pestaña en blanco, usamos esta como respaldo.
-        window.location.href = waUrl;
-      }
-
       form.reset();
       plans.forEach(x => x.classList.remove('selected'));
       document.querySelector('.plan[data-qty="2"]').classList.add('selected');
@@ -769,14 +745,9 @@ A partir de los 35 produces 1% menos de colágeno al año y se nota en 2 lugares
     } catch (err) {
       console.error("Error en el envío:", err);
       formStatus.className = 'form-status err';
-
-      const waFallbackUrl = "https://wa.me/" + WHATSAPP_NUMBER + "?text=Hola%20Yenifer,%20tuve%20un%20problema%20en%20la%20web%20y%20quiero%20confirmar%20mi%20pedido%20con%20Pago%20Contraentrega";
-      if (waWindow) {
-        waWindow.location.href = waFallbackUrl;
-      }
-
+      
       // Usamos innerHTML en lugar de textContent para que el enlace sea clickable
-      formStatus.innerHTML = 'No pudimos enviar tu pedido automáticamente. <br><br>👉 <a href="' + waFallbackUrl + '" target="_blank" style="color: #128C7E; font-weight: bold; text-decoration: underline;">Haz clic aquí para escribir por WhatsApp</a> y coordinar el envío de tu pedido.';
+      formStatus.innerHTML = 'No pudimos enviar tu pedido automáticamente. <br><br>👉 <a href="https://wa.me/51949222654?text=Hola%20Yenifer,%20tuve%20un%20problema%20en%20la%20web%20y%20quiero%20confirmar%20mi%20pedido%20con%20Pago%20Contraentrega" target="_blank" style="color: #128C7E; font-weight: bold; text-decoration: underline;">Haz clic aquí para escribir por WhatsApp</a> y coordinar el envío de tu pedido.';
       
     } finally {
       submitBtn.disabled = false;
